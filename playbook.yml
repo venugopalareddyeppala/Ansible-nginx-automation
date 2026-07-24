@@ -1,0 +1,49 @@
+---
+- name: Install and Configure Nginx on Web Servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx Service
+      service:
+        name: nginx
+        state: started
+
+    - name: Enable Nginx
+      service:
+        name: nginx
+        enabled: yes
+
+    - name: Deploy index page for Web1
+      template:
+        src: web1.html.j2
+        dest: /var/www/html/index.html
+      when: inventory_hostname == "web1"
+      notify: Restart Nginx
+
+    - name: Deploy index page for Web2
+      template:
+        src: web2.html.j2
+        dest: /var/www/html/index.html
+      when: inventory_hostname == "web2"
+      notify: Restart Nginx
+
+    - name: Deploy index page for Web3
+      template:
+        src: web3.html.j2
+        dest: /var/www/html/index.html
+      when: inventory_hostname == "web3"
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

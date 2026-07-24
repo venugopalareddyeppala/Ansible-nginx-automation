@@ -1,0 +1,9 @@
+[webservers]
+
+web1 ansible_host=<WEB1-PUBLIC-IP>
+web2 ansible_host=<WEB2-PUBLIC-IP>
+web3 ansible_host=<WEB3-PUBLIC-IP>
+
+[webservers:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=~/.ssh/id_rsa
