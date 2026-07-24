@@ -21,21 +21,21 @@
         name: nginx
         enabled: yes
 
-    - name: Deploy index page for Web1
+    - name: Deploy index page for web1
       template:
         src: web1.html.j2
         dest: /var/www/html/index.html
       when: inventory_hostname == "web1"
       notify: Restart Nginx
 
-    - name: Deploy index page for Web2
+    - name: Deploy index page for web2
       template:
         src: web2.html.j2
         dest: /var/www/html/index.html
       when: inventory_hostname == "web2"
       notify: Restart Nginx
 
-    - name: Deploy index page for Web3
+    - name: Deploy index page for web3
       template:
         src: web3.html.j2
         dest: /var/www/html/index.html
